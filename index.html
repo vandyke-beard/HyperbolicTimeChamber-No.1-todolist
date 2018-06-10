@@ -27,24 +27,55 @@
       <input name="" placeholder="+ Add Task" />
     </div>
     <div class="task-container flex-container">
-      <div class="task-item flex-item" v-bind:priority="todoitem.is_priority" v-bind:class="{closed:todoitem.is_closed}"  v-for="todoitem in filteredTasks " :key="todoitem.id">
-        <div class="pre-tool">
-          <!-- <input class="todo-checkbox" type="checkbox"/> -->
-          <div class="todo-checkbox-substitute" v-on:click="taskDone(todoitem)"></div>
+      <div v-for="todoitem in filteredTasks " :key="todoitem.id">
+        <div class="task-item flex-item" v-bind:priority="todoitem.is_priority" v-bind:class="{closed:todoitem.is_closed}">
+          <div class="pre-tool">
+            <!-- <input class="todo-checkbox" type="checkbox"/> -->
+            <div class="todo-checkbox-substitute" v-on:click="taskDone(todoitem)"></div>
+          </div>
+          <div class="task-info">
+            <h1 class="title">{{ todoitem.title }}</h1>
+            <p class="extra">
+              <span class="icon icon-calendar" aria-label="Date">{{ todoitem.date }}</span>
+              <span class="icon icon-doc" aria-label="This task has attachment." has-files v-if="todoitem.has_files"></span>
+              <span class="icon icon-commenting-o" aria-label="This task has comment." has-comment v-if="todoitem.has_comment"></span>
+            </p>
+          </div>
+          <div class="after-tool">
+              <button class="todo-btn priority-btn" aria-label="Set priority" v-on:click="taskPriority(todoitem)"></button>
+              <button class="todo-btn edit-btn" aria-label="Edit task" v-on:click="taskEdit(todoitem)"></button>
+          </div>
         </div>
-        <div class="task-info">
-          <h1 class="title">{{ todoitem.title }}</h1>
-          <p class="extra">
-            <span class="icon icon-calendar" aria-label="Date">{{ todoitem.date }}</span>
-            <span class="icon icon-doc" aria-label="This task has attachment." has-files v-if="todoitem.has_files"></span>
-            <span class="icon icon-commenting-o" aria-label="This task has comment." has-comment v-if="todoitem.has_comment"></span>
-          </p>
-        </div>
-        <div class="after-tool">
-            <button class="todo-btn priority-btn" aria-label="Set priority" v-on:click="taskPriority(todoitem)"></button>
-            <button class="todo-btn edit-btn" aria-label="Edit task" v-on:click="taskEdit(todoitem)"></button>
+        <div class="edit-todo-panel">
+
+          <div class="edit-todo-form">
+            <div class="form-group">
+              <div class="form-lead"><span class="icon icon-calendar" aria-label="Input Deadline."> Deadline</div>
+              <div class="form-input">
+                <input type="date">
+                <input type="time">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-lead"><span class="icon icon-doc" aria-label="Upload attachment file."> File</div>
+              <div class="form-input">
+                <input type="file"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-lead"><span class="icon icon-commenting-o" aria-label="Input comment."> Comment</div>
+              <div class="form-input">
+                <textarea rows="5" placeholder="Add some comment."></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="edit-todo-footer-btn-block">
+            <div class="footer-btn"> x Cancel </div>
+            <div class="footer-btn"> + Save </div>
+          </div>
         </div>
       </div>
+
     </div>
     <div><p class="status">{{ TasksNotesDisplay }}</p></div>
   </div>

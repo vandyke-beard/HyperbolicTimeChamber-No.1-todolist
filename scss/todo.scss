@@ -65,20 +65,23 @@ nav {
 
 			
 			&::placeholder {
-				font-family: Roboto-Regular;
+				font-family: Roboto;
+    			font-weight: 400;
 				font-size: 16px;
 				color:$medium-gray;
 				line-height: 24px;
 				opacity: 1; /* Firefox */
 			}
 			&:-ms-input-placeholder {
-				font-family: Roboto-Regular;
+				font-family: Roboto;
+    			font-weight: 400;
 				font-size: 16px;
 				color:$medium-gray;
 				line-height: 24px;
 			}
 			&::-ms-input-placeholder {
-				font-family: Roboto-Regular;
+				font-family: Roboto;
+    			font-weight: 400;
 				font-size: 16px;
 				color:$medium-gray;
 				line-height: 24px;
@@ -208,6 +211,41 @@ nav {
 							color: $gray!important;
 						}
 					}
+				}
+			}
+		}
+		.edit-todo-panel {
+			border-top: 2px solid $medium-gray;
+			background-color: $light-gray;
+
+			.form-group {
+				margin-bottom:20px;
+				.form-lead {
+					margin-bottom: 10px;
+					font-family: Roboto;
+    				font-weight: 500;
+					font-size:20px;
+					line-height: 24px;
+				}
+				.form-input {
+					width: calc(100% - 33px);
+    				margin-left: 33px;
+
+    				textarea {
+    					width:100%;
+    				}
+				}
+			}
+			.edit-todo-form {
+				padding:24px 72px;
+			}
+			.edit-todo-footer-btn-block {
+				display:inline-flex;
+				width:100%;
+				text-align:center;
+				.footer-btn {
+					width:50%;
+					flex: 1 1 auto;
 				}
 			}
 		}

@@ -30,29 +30,34 @@ a {
 
 // Font styles
 .title {
-	font-family: Roboto-Medium;
+	font-family: Roboto;
+	font-weight:500;
 	font-size: 24px;
 	color: $black;
 }
 .subtitle {
-	font-family: Roboto-Medium;
+	font-family: Roboto;
+	font-weight:500;
 	font-size: 20px;
 	color: $black;
 }
 p {
-	font-family: Roboto-Regular;
+	font-family: Roboto;
+	font-weight:400;
 	font-size: 16px;
 	color: $black;
 	line-height: 24px;
 }
 .remark {
-	font-family: Roboto-Regular;
+	font-family: Roboto;
+	font-weight:400;
 	font-size: 16px;
 	color: $heavy-gray;
 	line-height: 24px;
 }
 .status {
-	font-family: Roboto-Italic;
+	font-family: Roboto;
+	font-weight:400;
 	font-size: 24px;
 	margin-left:15px;
 	color: #C8C8C8;
