@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <link rel="stylesheet" type="text/css" href="css/all.css" async>
+  <link rel="stylesheet" type="text/css" href="css/todo-icon.css" async>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500" rel="stylesheet">
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="id-todolist">
+  <nav>
+    <div class="container">
+      <ul>
+        <li v-for="tab in tabs" v-bind:class="{active:tab.slug==current_tab}">
+          <a href="#" v-text="tab.display" @click="tabSelected(tab)"></a>
+        </li>
+        <!-- <li class="active"><a href="#">My Tasks</a></li>
+        <li><a href="#">In Progress</a></li>
+        <li><a href="#">Completed</a></li> -->
+      </ul>
+    </div>
+  </nav>
+
+  <div id="id-main" class="container">
+    <div class="new-task-input">
+      <input name="" placeholder="+ Add Task" />
+    </div>
+    <div class="task-container flex-container">
+      <div class="task-item flex-item" v-bind:priority="todoitem.is_priority" v-bind:class="{closed:todoitem.is_closed}"  v-for="todoitem in filteredTasks " :key="todoitem.id">
+        <div class="pre-tool">
+          <!-- <input class="todo-checkbox" type="checkbox"/> -->
+          <div class="todo-checkbox-substitute" v-on:click="taskDone(todoitem)"></div>
+        </div>
+        <div class="task-info">
+          <h1 class="title">{{ todoitem.title }}</h1>
+          <p class="extra">
+            <span class="icon icon-calendar" aria-label="Date">{{ todoitem.date }}</span>
+            <span class="icon icon-doc" aria-label="This task has attachment." has-files v-if="todoitem.has_files"></span>
+            <span class="icon icon-commenting-o" aria-label="This task has comment." has-comment v-if="todoitem.has_comment"></span>
+          </p>
+        </div>
+        <div class="after-tool">
+            <button class="todo-btn priority-btn" aria-label="Set priority" v-on:click="taskPriority(todoitem)"></button>
+            <button class="todo-btn edit-btn" aria-label="Edit task" v-on:click="taskEdit(todoitem)"></button>
+        </div>
+      </div>
+    </div>
+    <div><p class="status">{{ TasksNotesDisplay }}</p></div>
+  </div>
+</div>
+  
+  <script>
+      // Vue.component('todo-item', {
+      //   props: ['todo'],
+      //   template: '<li>{{ todo.text }}</li>'
+      // })
+      // var app7 = new Vue({
+      //   el: '#app-7',
+      //   data: {
+      //     groceryList: [
+      //       { id: 0, text: '蔬菜' },
+      //       { id: 1, text: '奶酪' },
+      //       { id: 2, text: '随便其他什么人吃的东西' }
+      //     ]
+      //   }
+      // })
+      // 
+      // Vue.filter('count', function (arr) {
+      //   var res = arr.length
+      //   return res
+      // })
+      var todo_app = new Vue({
+        // el: "#id-main",
+        el: "#id-todolist",
+        data : {
+          "current_tab" : 'all',
+          "tabs": [
+            {
+              "slug" : "all",
+              "display": "My Tasks"
+            },{
+              "slug" : 'progress',
+              "display": "In Progress"
+            },{
+              "slug" : 'completed',
+              "display": "Completed"
+            } ],
+          "todolist": [
+            {
+                "id": "1",
+                "is_closed" : false,
+                "is_priority": true,
+                "title":"記得去買菜/買蛋",
+                "subtitle":"",
+                "date": "2018/06/08",
+                "has_comment": true,
+                "has_files" : true,
+
+            },
+            {
+                "id": "2",
+                "is_closed" : true,
+                "is_priority": false,
+                "title":"接送小孩上下課",
+                "subtitle":"",
+                "date": "2018/06/19",
+                "has_comment": true,
+                "has_files" : false,
+            },
+            {
+                "id": "3",
+                "is_closed" : false,
+                "is_priority": false,
+                "title":"測試一般Task",
+                "subtitle":"",
+                "date": "2017/09/20",
+                "has_comment": false,
+                "has_files" : false,
+            },
+            {
+                "id": "4",
+                "is_closed" : false,
+                "is_priority": false,
+                "title":"Task 4",
+                "subtitle":"",
+                "date": "2017/09/20",
+                "has_comment": false,
+                "has_files" : false,
+            },
+            {
+                "id": "5",
+                "is_closed" : false,
+                "is_priority": false,
+                "title":"Task 5",
+                "subtitle":"",
+                "date": "2017/09/20",
+                "has_comment": false,
+                "has_files" : false,
+            }
+          ]
+        },
+        methods: {
+          tabSelected: function(tab) {
+            this.current_tab = tab.slug;
+
+          },
+          taskDone: function (todo_item) {
+            // todo_item.is_priority = false; // 移除優先權
+            todo_item.is_closed = !todo_item.is_closed;
+          },
+          taskPriority: function(todo_item) {
+            todo_item.is_priority = !todo_item.is_priority; // 切換優先權
+          },
+          taskEdit: function(todo_item) {
+
+          }
+        },
+        computed: {
+          filteredTasks() {
+            if(this.current_tab == 'all'){
+                return this.todolist;
+            }else if(this.current_tab == 'progress'){
+                return this.todolist.filter(todo_item => todo_item.is_closed === false);
+            }else if(this.current_tab == 'completed'){
+                return this.todolist.filter(todo_item => todo_item.is_closed === true);
+            }
+          },
+          TasksNotesDisplay() {
+            if(this.current_tab == 'all' || this.current_tab == 'progress'){
+                return (this.todolist.filter(todo_item => todo_item.is_closed === false)).length + " tasks left.";
+            }else if(this.current_tab == 'completed'){
+                return (this.todolist.filter(todo_item => todo_item.is_closed === true)).length + " tasks completed.";
+            }
+          }
+
+        }
+      })
+
+
+
+  </script>
+</body>
+</html>
